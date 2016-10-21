@@ -3,16 +3,17 @@
 require '../dBug.php';
 require '../src/meli.php';
 
-$meli = new Meli( array('appId' => '5804', 'secret' => '') );
+$meli = new Meli(['appId' => '5804', 'secret' => '']);
 
 $userId = $meli->initConnect();
 
 if ($userId) {
-	$pauseAction = array('status' => 'paused');
-	if (isset($_REQUEST['item_id']) == 1)
-		$response = $meli->putWithAccessToken('/items/' . $_REQUEST['item_id'], $pauseAction);
+    $pauseAction = ['status' => 'paused'];
+    if (isset($_REQUEST['item_id']) == 1) {
+        $response = $meli->putWithAccessToken('/items/'.$_REQUEST['item_id'], $pauseAction);
+    }
 
-	$session_content = $meli->getAccessToken();
+    $session_content = $meli->getAccessToken();
 }
 ?>
 <!doctype html>
@@ -35,7 +36,7 @@ if ($userId) {
 	</div>
 	<br />
 	<a href="<?php echo $meli->getLogoutUrl(); ?>">Logout</a>
-		<?php if($response) : ?>
+		<?php if ($response) : ?>
 		<hr/>
 		<p>
 			<h2>Response</h2>
@@ -46,8 +47,8 @@ if ($userId) {
 		<h2>Session Data</h2>
 	</p>
 	<?php
-		new dBug($session_content);
-		if(!preg_match('/items_write|item_management/', $session_content['scope'])) : ?>
+        new dBug($session_content);
+        if (!preg_match('/items_write|item_management/', $session_content['scope'])) : ?>
 			<h4 style="color: red">Attention: you have no items_write or item_management in your authorization scope.</h4>
 		<?php else: ?>
 			<h4 style="color: #009900">Cool! You have items_write or item_management in your authorization scope.</h4>
@@ -55,7 +56,7 @@ if ($userId) {
 	<?php else: ?>
 	<h1>Meli-PHP Pause Test - <strong style="color: red;">[Not logged in]</strong></h1>
 	<div>
-		<a href="<?php echo $meli->getLoginUrl( array('scope' => array('item_management', 'items_write', 'offline_access', 'read_basic')) ) ?>">Click here to Login</a>
+		<a href="<?php echo $meli->getLoginUrl(['scope' => ['item_management', 'items_write', 'offline_access', 'read_basic']]) ?>">Click here to Login</a>
 	</div>
 	<?php endif; ?>
 </body>

@@ -2,29 +2,29 @@
 require '../src/meli.php';
 
 // Create our Application instance (replace this with your appId and secret).
-$meli = new Meli(array(
-	'appId'  	=> 'MeliPHPAppId',
-	'secret' 	=> 'MeliPHPSecret',
-));
+$meli = new Meli([
+    'appId'     => 'MeliPHPAppId',
+    'secret'    => 'MeliPHPSecret',
+]);
 
-$userId = $meli -> initConnect();
+$userId = $meli->initConnect();
 
 // Login or logout url will be needed depending on current user state.
 if ($userId):
-	
-	if(isset($_REQUEST['question_id']) == 1):
 
-        $response = $meli -> postWithAccessToken('/answers', array('question_id' => $_REQUEST['question_id'], 'text' => $_REQUEST['answer_text']));
+    if (isset($_REQUEST['question_id']) == 1):
+
+        $response = $meli->postWithAccessToken('/answers', ['question_id' => $_REQUEST['question_id'], 'text' => $_REQUEST['answer_text']]);
 
         $_SESSION['answer_question'] = true;
 
-        header("Location: " . $meli -> getCurrentUrl(), TRUE, 302);
+        header('Location: '.$meli->getCurrentUrl(), true, 302);
 
     endif;
 
-    $user = $meli -> getWithAccessToken('/users/me');
+    $user = $meli->getWithAccessToken('/users/me');
 
-    $unansweredQuestions = $meli -> getWithAccessToken('/questions/search', array('seller' => $user['json']['id'], 'status' => 'UNANSWERED'));
+    $unansweredQuestions = $meli->getWithAccessToken('/questions/search', ['seller' => $user['json']['id'], 'status' => 'UNANSWERED']);
 
 endif;
 ?>
@@ -40,11 +40,11 @@ endif;
 	<?php if ($userId): ?>
 		<p>Hello <?php echo $user['json']['first_name'] ?></p>
 		
-		<a href="<?php echo $meli -> getLogoutUrl();?>">Logout</a>
+		<a href="<?php echo $meli->getLogoutUrl(); ?>">Logout</a>
 		
 		<h2> Unanswered Questions </h2>
 		<ul>
-			<?php foreach ($unansweredQuestions['json']['questions'] as $question):	?>
+			<?php foreach ($unansweredQuestions['json']['questions'] as $question):    ?>
 			<li>
 				<p><?php echo $question['text'] ?></p>
 				<form method="POST">
@@ -53,12 +53,12 @@ endif;
 					<input type="submit" value="Send" />
 				</form>
 			</li>
-			<?php endforeach;?>
+			<?php endforeach; ?>
 		</ul>
 	<?php else:?>
 		<div>
 			<p>Login using OAuth 2.0 handled by the PHP SDK:</p>
-			<a href="<?php echo $meli -> getLoginUrl(array('scope' => array('questions_write')));?>">Login with MercadoLibre</a>
+			<a href="<?php echo $meli->getLoginUrl(['scope' => ['questions_write']]); ?>">Login with MercadoLibre</a>
 		</div>
 	<?php endif?>
 </body>
