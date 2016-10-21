@@ -2,19 +2,19 @@
 require '../src/meli.php';
 
 // Create our Application instance (replace this with your appId and secret).
-$meli = new Meli(array(
-	'appId'  	=> 'MeliPHPAppId',
-	'secret' 	=> 'MeliPHPSecret',
-));
+$meli = new Meli([
+    'appId'     => 'MeliPHPAppId',
+    'secret'    => 'MeliPHPSecret',
+]);
 
-if(isset($_REQUEST['q'])):
-	
-	$query = $_REQUEST['q'];
-	
-	$search = $meli->get('/sites/#{siteId}/search',array(
-		'q' => $query)
-	);
-	
+if (isset($_REQUEST['q'])):
+
+    $query = $_REQUEST['q'];
+
+    $search = $meli->get('/sites/#{siteId}/search', [
+        'q' => $query, ]
+    );
+
 endif;
 ?>
 <!doctype html>
@@ -34,10 +34,10 @@ endif;
 	
 	<ol>
 	<?php
-		foreach ($search['json']['results'] as &$searchItem):
-		   echo '<li><a href="' . $searchItem['permalink'] . '">'. $searchItem['title'].'</a></li>';
-		endforeach;
-	?>
+        foreach ($search['json']['results'] as &$searchItem):
+           echo '<li><a href="'.$searchItem['permalink'].'">'.$searchItem['title'].'</a></li>';
+        endforeach;
+    ?>
     </ol>
 
 </body>
