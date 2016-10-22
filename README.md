@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/glisandro/php-sdk.svg?branch=master)](https://travis-ci.org/glisandro/php-sdk)
+[![StyleCI](https://styleci.io/repos/71588977/shield?branch=master)](https://styleci.io/repos/71588977)
 
 # MercadoLibre's PHP SDK
 
