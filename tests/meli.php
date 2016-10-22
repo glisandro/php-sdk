@@ -1,6 +1,6 @@
 <?php
 
-require_once '../MercadoLivre/meli.php';
+require_once '../Meli/meli.php';
 
 class InitSDKTest extends PHPUnit_Framework_TestCase
 {
