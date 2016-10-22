@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/glisandro/php-sdk.svg?branch=master)](https://travis-ci.org/glisandro/php-sdk)
+
 # MercadoLibre's PHP SDK
 
 This is the official PHP SDK for MercadoLibre's Platform.
